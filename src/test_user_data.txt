@@ -1,0 +1,44 @@
+$users = [
+        [
+            'username' => 'hanif',
+            'password' => 'spadmin123', // PW Super Admin
+            'role' => 'super_admin',
+            'manager_id' => null
+        ],
+        [
+            'username' => 'azril',
+            'password' => 'azril123', // PW Project Manager 1
+            'role' => 'project_manager',
+            'manager_id' => null
+        ],
+        [
+            'username' => 'andreana',
+            'password' => 'andreana123', // PW Project Manager 2
+            'role' => 'project_manager',
+            'manager_id' => null
+        ],
+        [
+            'username' => 'rusdi',
+            'password' => 'rusdi123', // PW Team Member 1
+            'role' => 'team_member',
+            'manager_id' => 2 // Melapor ke Azril (ID 2)
+        ],
+        [
+            'username' => 'wibowo',
+            'password' => 'wibowo123', // PW Team Member 2
+            'role' => 'team_member',
+            'manager_id' => 2 // Melapor ke Azril (ID 2)
+        ],
+        [
+            'username' => 'bahlil',
+            'password' => 'bahlil123', // PW Team Member 3
+            'role' => 'team_member',
+            'manager_id' => 3 // Melapor ke Andreana (ID 3)
+        ],
+        [
+            'username' => 'sahroni',
+            'password' => 'sahroni123', // PW Team Member 4
+            'role' => 'team_member',
+            'manager_id' => 3 // Melapor ke Andreana (ID 3)
+        ]
+    ];
