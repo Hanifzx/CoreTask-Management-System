@@ -62,11 +62,81 @@ if ($role !== 'super_admin') {
             </div>
         </form>
     </div>
+    <div class="mt-10 mb-10 pt-6 border-t border-gray-200">
+        <h2 class="font-bold text-xl mb-4">Daftar Pengguna</h2>
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Nama Pengguna</th>
+                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Jabatan</th>
+                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Manajer</th>
+                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <?php
+                    // Query untuk mengambil SEMUA user (PM & Member) + nama manajernya
+                    $sql_all_users = "
+                        SELECT 
+                            u.id, 
+                            u.username, 
+                            u.role, 
+                            m.username AS manager_name 
+                        FROM 
+                            users u 
+                        LEFT JOIN 
+                            users m ON u.project_manager_id = m.id 
+                        WHERE 
+                            u.role IN ('project_manager', 'team_member')
+                        ORDER BY 
+                            u.id ASC 
+                    "; // Mengurutkan berdasarkan ID
+                    $result_all_users = $conn->query($sql_all_users);
+                    $counter = 1; // Untuk nomor urut (#)
+
+                    if ($result_all_users && $result_all_users->num_rows > 0):
+                        while ($user_row = $result_all_users->fetch_assoc()):
+                    ?>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 font-medium text-gray-900"><?php echo $counter++; ?></td>
+                                <td class="px-6 py-4 text-gray-700"><?php echo htmlspecialchars(ucfirst($user_row['username'])); ?></td>
+                                <td class="px-6 py-4 text-gray-700">
+                                    <?php 
+                                    // Mengubah 'project_manager' -> 'Project Manager'
+                                    echo htmlspecialchars(ucwords(str_replace('_', ' ', $user_row['role']))); 
+                                    ?>
+                                </td>
+                                <td class="px-6 py-4 text-gray-700">
+                                    <?php 
+                                    // Tampilkan nama manajer hanya jika ada (untuk team member)
+                                    echo $user_row['manager_name'] ? htmlspecialchars(ucfirst($user_row['manager_name'])) : '-'; 
+                                    ?>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="#" class="inline-block bg-blue-100 text-blue-600 hover:bg-blue-200 px-3 py-1 rounded-md mr-2">Edit</a>
+                                    
+                                    <a href="manage_users.php?delete=<?php echo $user_row['id']; ?>" 
+                                    class="inline-block bg-red-100 text-red-600 hover:bg-red-200 px-3 py-1 rounded-md" 
+                                    onclick="return confirmDelete('pengguna <?php echo htmlspecialchars($user_row['username']); ?>');">
+                                    Hapus
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr><td colspan="5" class="px-6 py-4 text-center text-gray-500">Belum ada Project Manager atau Team Member.</td></tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-<div>
+<!-- <div>
     <h1 class="font-bold text-lg"> Daftar Pengguna</h1>
-</div>
+</div> -->
 
 <?php
 require_once '../src/partials/footer_tags.php';
