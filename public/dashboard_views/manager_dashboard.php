@@ -21,7 +21,7 @@ $stmt_my_team->close();
 <div>
     <div class="h-18 px-8 py-12 mb-3 flex flex-col justify-center items-start">
         <h1 class="font-bold text-2xl">Dashboard Project Manager</h1>
-        <p class="font-semibold text-sm text-gray-500">Berikut ringkasan proyek dan tim Anda.</p>
+        <p class="font-semibold text-sm text-gray-500">Berikut ringkasan proyek dan tim Anda</p>
     </div>
 
     <!-- Kartu Statistik -->
@@ -29,12 +29,16 @@ $stmt_my_team->close();
         <div class="w-1/4 bg-white px-6 py-6 border-2 border-gray-200 rounded-2xl">
             <div class="mb-2 flex justify-between items-center">
                 <h3 class="font-semibold text-md text-gray-400">Proyek Anda</h3>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
+                class="h-5 w-5 fill-black"><path d="M97.5 400l50-160 379.4 0-50 160-379.4 0zm190.7 48L477 448c21 0 39.6-13.6 45.8-33.7l50-160c9.7-30.9-13.4-62.3-45.8-62.3l-379.4 0c-21 0-39.6 13.6-45.8 33.7L80.2 294.4 80.2 96c0-8.8 7.2-16 16-16l138.7 0c3.5 0 6.8 1.1 9.6 3.2L282.9 112c13.8 10.4 30.7 16 48 16l117.3 0c8.8 0 16 7.2 16 16l48 0c0-35.3-28.7-64-64-64L330.9 80c-6.9 0-13.7-2.2-19.2-6.4L273.3 44.8C262.2 36.5 248.8 32 234.9 32L96.2 32c-35.3 0-64 28.7-64 64l0 288c0 35.3 28.7 64 64 64l192 0z"/></svg>
             </div>
             <h2 class="font-bold text-3xl"><?php echo $total_my_projects; ?></h2>
         </div>
         <div class="w-1/4 bg-white px-6 py-6 border-2 border-gray-200 rounded-2xl">
             <div class="mb-2 flex justify-between items-center">
                 <h3 class="font-semibold text-md text-gray-400">Anggota Tim Anda</h3>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                class="h-5 w-5 fill-black"><path d="M256 0a64 64 0 1 1 0 128 64 64 0 1 1 0-128zm96 312c0 25-12.7 47-32 59.9l0 92.1c0 26.5-21.5 48-48 48l-32 0c-26.5 0-48-21.5-48-48l0-92.1C172.7 359 160 337 160 312l0-40c0-53 43-96 96-96s96 43 96 96l0 40zM96 32a56 56 0 1 1 0 112 56 56 0 1 1 0-112zm16 240l0 32c0 32.5 12.1 62.1 32 84.7l0 75.3c0 1.2 0 2.5 .1 3.7-8.5 7.6-19.7 12.3-32.1 12.3l-32 0c-26.5 0-48-21.5-48-48l0-56.6C12.9 364.4 0 343.7 0 320l0-32c0-53 43-96 96-96 12.7 0 24.8 2.5 35.9 6.9-12.6 21.4-19.9 46.4-19.9 73.1zM368 464l0-75.3c19.9-22.5 32-52.2 32-84.7l0-32c0-26.7-7.3-51.6-19.9-73.1 11.1-4.5 23.2-6.9 35.9-6.9 53 0 96 43 96 96l0 32c0 23.7-12.9 44.4-32 55.4l0 56.6c0 26.5-21.5 48-48 48l-32 0c-12.3 0-23.6-4.6-32.1-12.3 0-1.2 .1-2.5 .1-3.7zM416 32a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
             </div>
             <h2 class="font-bold text-3xl"><?php echo $total_my_team; ?></h2>
         </div>

@@ -29,25 +29,31 @@ $stmt_completed->close();
 <div>
     <div class="h-18 px-8 py-12 mb-3 flex flex-col justify-center items-start">
         <h1 class="font-bold text-2xl">Dashboard Team Member</h1>
-        <p class="font-semibold text-sm text-gray-500">Berikut ringkasan tugas Anda.</p>
+        <p class="font-semibold text-sm text-gray-500">Berikut ringkasan tugas Anda</p>
     </div>
 
     <div id="card-container" class="flex gap-6 mx-8">
         <div class="w-1/3 bg-white px-6 py-6 border-2 border-gray-200 rounded-2xl">
             <div class="mb-2 flex justify-between items-center">
                 <h3 class="font-semibold text-md text-gray-400">Total Tugas</h3>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                class="h-5 w-5 fill-black"><path d="M133.8 36.3c10.9 7.6 13.5 22.6 5.9 33.4l-56 80c-4.1 5.8-10.5 9.5-17.6 10.1S52 158 47 153L7 113C-2.3 103.6-2.3 88.4 7 79S31.6 69.7 41 79l19.8 19.8 39.6-56.6c7.6-10.9 22.6-13.5 33.4-5.9zm0 160c10.9 7.6 13.5 22.6 5.9 33.4l-56 80c-4.1 5.8-10.5 9.5-17.6 10.1S52 318 47 313L7 273c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l19.8 19.8 39.6-56.6c7.6-10.9 22.6-13.5 33.4-5.9zM224 96c0-17.7 14.3-32 32-32l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-224 0c-17.7 0-32-14.3-32-32zm0 160c0-17.7 14.3-32 32-32l224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-224 0c-17.7 0-32-14.3-32-32zM160 416c0-17.7 14.3-32 32-32l288 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-288 0c-17.7 0-32-14.3-32-32zM64 376a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"/></svg>
             </div>
             <h2 class="font-bold text-3xl"><?php echo $total_tasks; ?></h2>
         </div>
         <div class="w-1/3 bg-white px-6 py-6 border-2 border-gray-200 rounded-2xl">
             <div class="mb-2 flex justify-between items-center">
                 <h3 class="font-semibold text-md text-gray-400">Tugas Diproses</h3>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"
+                class="h-5 w-5 fill-yellow-500"><path d="M32 0C14.3 0 0 14.3 0 32S14.3 64 32 64l0 11c0 42.4 16.9 83.1 46.9 113.1l67.9 67.9-67.9 67.9C48.9 353.9 32 394.6 32 437l0 11c-17.7 0-32 14.3-32 32s14.3 32 32 32l320 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l0-11c0-42.4-16.9-83.1-46.9-113.1l-67.9-67.9 67.9-67.9c30-30 46.9-70.7 46.9-113.1l0-11c17.7 0 32-14.3 32-32S369.7 0 352 0L32 0zM288 437l0 11-192 0 0-11c0-25.5 10.1-49.9 28.1-67.9l67.9-67.9 67.9 67.9c18 18 28.1 42.4 28.1 67.9z"/></svg>
             </div>
             <h2 class="font-bold text-3xl"><?php echo $progress_tasks; ?></h2>
         </div>
         <div class="w-1/3 bg-white px-6 py-6 border-2 border-gray-200 rounded-2xl">
             <div class="mb-2 flex justify-between items-center">
                 <h3 class="font-semibold text-md text-gray-400">Tugas Selesai</h3>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                class="h-6 w-6 fill-green-500"><path d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zm0-464a208 208 0 1 0 0 416 208 208 0 1 0 0-416zm70.7 121.9c7.8-10.7 22.8-13.1 33.5-5.3 10.7 7.8 13.1 22.8 5.3 33.5L243.4 366.1c-4.1 5.7-10.5 9.3-17.5 9.8-7 .5-13.9-2-18.8-6.9l-55.9-55.9c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l36 36 105.6-145.2z"/></svg>
             </div>
             <h2 class="font-bold text-3xl"><?php echo $completed_tasks; ?></h2>
         </div>

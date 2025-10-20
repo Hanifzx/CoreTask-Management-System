@@ -79,7 +79,7 @@ $role = $_SESSION['role'];
             </div>
         </div>
 
-        <main id="main-container" class="flex-1 ml-56 bg-white-blue overflow-y-auto h-screen">
+        <main id="main-container" class="flex-1 ml-56 bg-white-blues overflow-y-auto h-screen" style="background-color: #e8e8e8ff">
         <!-- </main>
     </div>
 </body>
