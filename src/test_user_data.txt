@@ -1,7 +1,7 @@
 $users = [
         [
             'username' => 'hanif',
-            'password' => 'spadmin123', // PW Super Admin
+            'password' => 'admin123', // PW Super Admin
             'role' => 'super_admin',
             'manager_id' => null
         ],
@@ -24,7 +24,7 @@ $users = [
             'manager_id' => 2 // Melapor ke Azril (ID 2)
         ],
         [
-            'username' => 'amba',
+            'username' => 'wibowo',
             'password' => 'wibowo123', // PW Team Member 2
             'role' => 'team_member',
             'manager_id' => 2 // Melapor ke Azril (ID 2)

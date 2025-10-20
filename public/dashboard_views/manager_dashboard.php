@@ -1,5 +1,7 @@
 <?php
 
+global $conn;
+
 // Mengambil jumlah proyek yang dimiliki oleh manajer ini
 $sql_total_my_projects = "SELECT COUNT(id) AS total FROM projects WHERE manager_id = ?";
 $stmt_my_projects = $conn->prepare($sql_total_my_projects);

@@ -1,6 +1,8 @@
 <?php
 require_once '../src/config/connection.php';
 
+global $conn;
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();

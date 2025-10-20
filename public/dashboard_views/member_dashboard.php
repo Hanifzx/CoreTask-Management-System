@@ -1,4 +1,7 @@
 <?php
+
+global $conn;
+
 // Total Tugas
 $sql_total_tasks = "SELECT COUNT(id) AS total FROM tasks WHERE assigned_to = ?";
 $stmt_total = $conn->prepare($sql_total_tasks);
