@@ -67,3 +67,80 @@ if (addUserForm) {
         }
     });
 }
+
+// ============================ //
+// EDIT USER MODAL LOGIC        //
+// ============================ //
+
+// Dapatkan elemen-elemen modal
+const editModal = document.getElementById('edit-user-modal');
+const editForm = document.getElementById('edit_user_form');
+const editUserIdInput = document.getElementById('edit_user_id');
+const editUsernameInput = document.getElementById('edit_username');
+const editPasswordInput = document.getElementById('edit_password');
+const editRoleSelect = document.getElementById('edit_role');
+const editManagerDiv = document.getElementById('edit-manager-dropdown');
+const editManagerSelect = document.getElementById('edit_project_manager_id');
+const cancelEditBtn = document.getElementById('cancel-edit-btn');
+
+// Fungsi untuk membuka modal dan mengisi data
+function openEditModal(userData) {
+    editUserIdInput.value = userData.id;
+    editUsernameInput.value = userData.username;
+    editPasswordInput.value = ''; // Kosongkan password saat membuka
+    editRoleSelect.value = userData.role;
+
+    // Picu event 'change' agar dropdown manager tampil/sembunyi
+    editRoleSelect.dispatchEvent(new Event('change'));
+
+    // Set nilai manager jika ada
+    if (userData.role === 'team_member' && userData.managerid) {
+        editManagerSelect.value = userData.managerid;
+    } else {
+        editManagerSelect.value = '';
+    }
+
+    editModal.style.display = 'flex'; // Tampilkan modal
+}
+
+// Fungsi untuk menutup modal
+function closeEditModal() {
+    editModal.style.display = 'none';
+}
+
+// Tambahkan event listener ke SEMUA tombol edit di tabel
+// Kita gunakan event delegation pada body atau tabel container untuk efisiensi
+document.body.addEventListener('click', function(event) {
+    if (event.target.classList.contains('edit-user-btn')) {
+        const button = event.target;
+        const userData = {
+            id: button.dataset.id,
+            username: button.dataset.username,
+            role: button.dataset.role,
+            managerid: button.dataset.managerid
+        };
+        openEditModal(userData);
+    }
+});
+
+// Tambahkan event listener untuk tombol Batal
+cancelEditBtn.addEventListener('click', closeEditModal);
+
+// (Optional) Tutup modal jika klik di luar area modal
+editModal.addEventListener('click', function(event) {
+    if (event.target === editModal) { // Cek jika target klik adalah latar belakang modal
+        closeEditModal();
+    }
+});
+
+// Tambahkan event listener untuk show/hide manager dropdown DI DALAM MODAL EDIT
+editRoleSelect.addEventListener('change', function() {
+    if (this.value === 'team_member') {
+        editManagerDiv.style.display = 'block';
+        editManagerSelect.required = true;
+    } else {
+        editManagerDiv.style.display = 'none';
+        editManagerSelect.required = false;
+        editManagerSelect.value = '';
+    }
+});

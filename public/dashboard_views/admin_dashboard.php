@@ -89,7 +89,7 @@ $result_member_list = $conn->query($sql_member_list);
 // require_once '../src/partials/sidebar.php';
 ?>
 
-<div>
+<div class="mx-2">
     <div class="h-18 px-8 py-13 mb-3 flex flex-col justify-center items-start">
         <h1 class="font-bold text-2xl">Dashboard Admin</h1>
 
