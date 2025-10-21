@@ -31,9 +31,9 @@ global $conn;
         </div>
     <?php endif; ?>
 
-    <div class="flex flex-col bg-white px-6 py-6 rounded-2xl border-2 border-gray-200 mt-2 mb-8">
+    <div class="flex flex-col bg-white px-5 py-5 rounded-2xl border-2 border-gray-200 mt-2 mb-8">
         <h2 class="font-bold text-xl mb-4">Tambah Proyek Baru</h2>
-        <form method="POST" action="../src/actions/project_actions.php" class="space-y-4">
+        <form method="POST" action="../src/actions/project_actions.php" class="space-y-3">
             <div class="flex flex-col gap-2">
                 <label for="project_name" class="font-medium">Nama Proyek <span class="text-red-500">*</span></label>
                 <input type="text" name="project_name" id="project_name" placeholder="Masukkan nama proyek" required
@@ -53,7 +53,7 @@ global $conn;
         </form>
     </div>
 
-    <div class="mb-10 pt-6 border-t border-gray-200">
+    <div class="mb-10 border-t border-gray-200">
         <h2 class="font-bold text-xl mb-3">Daftar Proyek Anda</h2>
         <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
