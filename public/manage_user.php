@@ -19,8 +19,10 @@ if (isset($_SESSION['flash_message'])) {
 ?>
 
 <div class="mx-10">
-    <div class="h-18 py-11 flex flex-col justify-center items-start">
-        <h1 class="font-bold text-2xl">Kelola Pengguna</h1>
+    <div class="h-18 py-12 flex flex-col justify-center items-start">
+        <h1 class="font-bold text-2xl">Data Pengguna</h1>
+        <p class="font-semibold text-sm text-gray-500">Kelola semua data pengguna dengan cepat</p>
+
     </div>
 
     <?php if (!empty($message)): ?>
@@ -83,15 +85,15 @@ if (isset($_SESSION['flash_message'])) {
 
     <div class="mt-2 mb-10 pt-6 border-t border-gray-200">
         <h2 class="font-bold text-xl mb-3">Daftar Pengguna</h2>
-        <div class="overflow-x-auto rounded-lg border border-gray-200">
+        <div class="overflow-x-auto rounded-2xl border-2 border-gray-200">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">#</th>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Nama Pengguna</th>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Jabatan</th>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Manajer</th>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Tindakan</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Nama Pengguna</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Jabatan</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Manajer</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -114,13 +116,13 @@ if (isset($_SESSION['flash_message'])) {
                             u.id ASC
                     ";
                     $result_all_users = $conn->query($sql_all_users);
-                    $counter = 1;
+                    // $counter = 1;
 
                     if ($result_all_users && $result_all_users->num_rows > 0):
                         while ($user_row = $result_all_users->fetch_assoc()):
                     ?>
                             <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 font-medium text-gray-900"><?php echo $counter++; ?></td>
+                                <td class="px-6 py-4 font-medium text-gray-900"><?php echo $user_row['id']; ?></td>
                                 <td class="px-6 py-4 text-gray-700"><?php echo htmlspecialchars(ucfirst($user_row['username'])); ?></td>
                                 <td class="px-6 py-4 text-gray-700">
                                     <?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $user_row['role']))); ?>

@@ -1,18 +1,11 @@
 <?php
-// 1. Panggil bingkai (sidebar, head, dll)
 require_once '../src/partials/sidebar.php';
 
-// 2. CEK KEAMANAN: Pastikan hanya Super Admin yang bisa akses
 if ($role !== 'super_admin') {
-    // Jika bukan super admin, tendang ke dashboard utama
     header('Location: dashboard.php');
     exit();
 }
 
-// 3. LOGIKA PHP UNTUK HAPUS PROYEK (akan dibuat nanti di file aksi)
-// Kita akan perlu ambil pesan flash juga di sini nantinya
-
-// Ambil pesan flash dari session (jika ada setelah redirect dari aksi hapus)
 $message = '';
 $message_type = '';
 if (isset($_SESSION['flash_message'])) {
@@ -25,9 +18,9 @@ if (isset($_SESSION['flash_message'])) {
 ?>
 
 <div class="mx-10">
-    <div class="h-18 py-11 flex flex-col justify-center items-start">
+    <div class="h-18 py-13 flex flex-col justify-center items-start">
         <h1 class="font-bold text-2xl">Semua Proyek</h1>
-        <p class="font-semibold text-sm text-gray-500">Lihat semua proyek yang ada di sistem.</p>
+        <p class="font-semibold text-sm text-gray-500">Lihat semua proyek yang ada di sistem</p>
     </div>
 
     <?php if (!empty($message)): ?>
@@ -36,17 +29,17 @@ if (isset($_SESSION['flash_message'])) {
         </div>
     <?php endif; ?>
 
-    <div class="mt-2 mb-10 pt-6 border-t border-gray-200">
-        <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+    <div class="mb-10 pt-3 border-t border-gray-200">
+        <div class="overflow-x-auto rounded-2xl border-2 border-gray-200 bg-white">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">ID</th>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Nama Proyek</th>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Tgl Mulai</th>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Manajer</th>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Tim Terlibat</th>
-                        <th class="px-6 py-3 text-left font-semibold text-gray-500 uppercase tracking-wider">Tindakan</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">ID</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Nama Proyek</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Tgl Mulai</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Manajer</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Tim Terlibat</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
