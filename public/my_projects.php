@@ -17,8 +17,8 @@ if (isset($_SESSION['flash_message'])) {
 
 ?>
 
-<div class="mx-10">
-    <div class="h-18 py-11 flex flex-col justify-center items-start">
+<div class="mx-8">
+    <div class="h-18 py-12 flex flex-col justify-center items-start">
         <h1 class="font-bold text-2xl">Proyek Saya</h1>
         <p class="font-semibold text-sm text-gray-500">Kelola semua proyek yang Anda pimpin.</p>
     </div>
@@ -29,7 +29,7 @@ if (isset($_SESSION['flash_message'])) {
         </div>
     <?php endif; ?>
 
-    <div class="flex flex-col bg-white px-6 py-6 rounded-2xl border-2 border-gray-200 mb-8">
+    <div class="flex flex-col bg-white px-6 py-6 rounded-2xl border-2 border-gray-200 mt-2 mb-8">
         <h2 class="font-bold text-xl mb-4">Tambah Proyek Baru</h2>
         <form method="POST" action="../src/actions/project_actions.php" class="space-y-4">
             <div class="flex flex-col gap-2">
@@ -53,7 +53,7 @@ if (isset($_SESSION['flash_message'])) {
 
     <div class="mb-10 pt-6 border-t border-gray-200">
         <h2 class="font-bold text-xl mb-3">Daftar Proyek Anda</h2>
-        <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+        <div class="overflow-x-auto rounded-2xl border-2 border-gray-200 bg-white">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
                 <thead class="bg-gray-50">
                     <tr>
