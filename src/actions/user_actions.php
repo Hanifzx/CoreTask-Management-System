@@ -3,12 +3,14 @@
 require_once __DIR__ . '/../config/connection.php';
 
 // Pastikan hanya Super Admin yang bisa menjalankan aksi ini
-// (Ini lapisan keamanan tambahan, meskipun halaman utamanya sudah dicek)
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'super_admin') {
-    // Jika bukan super admin, redirect atau hentikan
-    header('Location: ../../public/dashboard.php'); // Arahkan ke dashboard publik
+    header('Location: ../../public/dashboard.php');
     exit();
 }
+
+// ===================================
+// UTAMAKAN AKSI POST (DARI FORM)
+// ===================================
 
 // PROSES TAMBAH PENGGUNA
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tambah_user'])) {
@@ -44,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tambah_user'])) {
         }
         $stmt_check->close();
     }
-    // Redirect kembali ke halaman manage_users setelah proses
     header("Location: ../../public/manage_user.php");
     exit();
 }
@@ -96,12 +97,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_user'])) {
         }
         $stmt_check_edit->close();
     }
-    // Redirect kembali ke halaman manage_users setelah proses
     header("Location: ../../public/manage_user.php");
     exit();
 }
 
-// PROSES HAPUS PENGGUNA
+// ===================================
+// TANGANI AKSI GET (DARI LINK)
+// ===================================
+
+// PROSES HAPUS PENGGUNA (DARI manage_user.php)
 if (isset($_GET['delete'])) {
     $delete_id = (int)$_GET['delete'];
     $sql_delete = "DELETE FROM users WHERE id = ? AND role != 'super_admin'";
@@ -115,11 +119,43 @@ if (isset($_GET['delete'])) {
         $_SESSION['flash_type'] = 'error';
     }
     $stmt_delete->close();
-    // Redirect kembali ke halaman manage_users setelah proses
     header("Location: ../../public/manage_user.php");
     exit();
 }
 
-// Jika tidak ada aksi yang cocok, redirect saja
+// PROSES HAPUS PROYEK (DARI view_all_projects.php)
+if (isset($_GET['delete_project'])) {
+    $project_id = (int)$_GET['delete_project'];
+
+    // Keamanan: Hapus dulu semua tasks yang terkait dengan proyek ini
+    $sql_delete_tasks = "DELETE FROM tasks WHERE project_id = ?";
+    $stmt_tasks = $conn->prepare($sql_delete_tasks);
+    $stmt_tasks->bind_param("i", $project_id);
+    $stmt_tasks->execute();
+    $stmt_tasks->close();
+
+    // Setelah tasks bersih, baru hapus proyeknya
+    $sql_delete_project = "DELETE FROM projects WHERE id = ?";
+    $stmt_project = $conn->prepare($sql_delete_project);
+    $stmt_project->bind_param("i", $project_id);
+
+    if ($stmt_project->execute()) {
+        $_SESSION['flash_message'] = "Proyek berhasil dihapus (beserta semua tugas di dalamnya).";
+        $_SESSION['flash_type'] = 'success';
+    } else {
+        $_SESSION['flash_message'] = "Gagal menghapus proyek: " . $conn->error;
+        $_SESSION['flash_type'] = 'error';
+    }
+    $stmt_project->close();
+    
+    header("Location: ../../public/view_all_projects.php");
+    exit();
+}
+
+// ===================================
+// JIKA TIDAK ADA AKSI DI ATAS
+// ===================================
+
+// Jika tidak ada aksi yang cocok, redirect ke halaman utama admin
 header("Location: ../../public/manage_user.php");
 exit();

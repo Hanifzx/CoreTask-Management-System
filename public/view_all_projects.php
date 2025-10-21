@@ -83,7 +83,7 @@ if (isset($_SESSION['flash_message'])) {
                                     <?php echo !empty($project_row['team_members']) ? htmlspecialchars($project_row['team_members']) : '-'; ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="../src/actions/project_actions.php?delete=<?php echo $project_row['project_id']; ?>"
+                                    <a href="../src/actions/user_actions.php?delete_project=<?php echo $project_row['project_id']; ?>"
                                         class="inline-block bg-red-100 text-red-600 hover:bg-red-200 px-3 py-1 rounded-md"
                                         onclick="return confirmDelete('proyek <?php echo htmlspecialchars($project_row['project_name']); ?>');">
                                         Hapus

@@ -1,10 +1,22 @@
 <?php
-require_once '../src/partials/sidebar.php';
+require_once '../src/config/connection.php';
 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+// 3. Ambil role
+$role = $_SESSION['role'];
+
+// 4. SEKARANG, cek hak akses (otorisasi)
 if ($role !== 'project_manager') {
+    // Jika bukan PM, redirect SEBELUM HTML dicetak
     header('Location: dashboard.php');
     exit();
 }
+
+require_once '../src/partials/sidebar.php';
 
 $message = '';
 $message_type = '';
@@ -16,7 +28,6 @@ if (isset($_SESSION['flash_message'])) {
 }
 
 global $conn;
-
 ?>
 
 <div class="mx-8">
