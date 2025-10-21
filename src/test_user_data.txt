@@ -40,5 +40,10 @@ $users = [
             'password' => 'sahroni123', // PW Team Member 4
             'role' => 'team_member',
             'manager_id' => 3 // Melapor ke Andreana (ID 3)
+        ],
+        [
+            'username' => 'reza',
+            'password' => 'reza123',
+            'role' = 'team_member'
         ]
     ];

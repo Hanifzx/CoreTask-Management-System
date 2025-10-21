@@ -59,7 +59,7 @@ if (isset($_SESSION['flash_message'])) {
                     <tr>
                         <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Nama Proyek</th>
                         <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Tgl Mulai</th>
-                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Deadline</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Tgl Selesai</th>
                         <th class="px-6 py-3 text-center font-bold text-gray-700 uppercase tracking-wider">Tindakan</th>
                     </tr>
                 </thead>
@@ -68,7 +68,7 @@ if (isset($_SESSION['flash_message'])) {
                     // Query untuk mengambil SEMUA proyek milik manajer ini
                     $sql_my_projects_list = "SELECT id, project_name, start_date, end_date FROM projects WHERE manager_id = ? ORDER BY id DESC";
                     $stmt_my_list = $conn->prepare($sql_my_projects_list);
-                    $stmt_my_list->bind_param("i", $user_id); // $user_id dari sidebar.php
+                    $stmt_my_list->bind_param("i", $user_id);
                     $stmt_my_list->execute();
                     $result_my_projects_list = $stmt_my_list->get_result();
 
@@ -92,10 +92,6 @@ if (isset($_SESSION['flash_message'])) {
                                         onclick="return confirmDelete('proyek <?php echo htmlspecialchars($project_row['project_name']); ?>');">
                                         Hapus
                                     </a>
-                                    <a href="project_tasks.php?project_id=<?php echo $project_row['id']; ?>"
-                                        class="inline-block bg-green-100 text-green-700 hover:bg-green-200 px-3 py-1 rounded-md">
-                                        Kelola Tugas
-                                    </a>
                                 </td>
                             </tr>
                         <?php endwhile; ?>
@@ -113,6 +109,5 @@ if (isset($_SESSION['flash_message'])) {
 </div>
 
 <?php
-// Panggil tag penutup
 require_once '../src/partials/footer_tags.php';
 ?>
