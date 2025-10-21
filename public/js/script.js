@@ -52,14 +52,12 @@ if (addUserForm) {
         const roleValue = roleDropdown.value;
         const managerValue = managerSelect.value;
 
-        // Cegah submit jika role belum dipilih
         if (!roleValue) {
             e.preventDefault();
             alert('Silakan pilih Role terlebih dahulu.');
             return;
         }
 
-        // Cegah submit jika role = team_member tapi manager belum dipilih
         if (roleValue === 'team_member' && !managerValue) {
             e.preventDefault();
             alert('Silakan pilih Project Manager untuk Team Member.');
@@ -72,7 +70,6 @@ if (addUserForm) {
 // EDIT USER MODAL LOGIC        //
 // ============================ //
 
-// Dapatkan elemen-elemen modal
 const editModal = document.getElementById('edit-user-modal');
 const editForm = document.getElementById('edit_user_form');
 const editUserIdInput = document.getElementById('edit_user_id');
@@ -87,29 +84,24 @@ const cancelEditBtn = document.getElementById('cancel-edit-btn');
 function openEditModal(userData) {
     editUserIdInput.value = userData.id;
     editUsernameInput.value = userData.username;
-    editPasswordInput.value = ''; // Kosongkan password saat membuka
+    editPasswordInput.value = '';
     editRoleSelect.value = userData.role;
 
-    // Picu event 'change' agar dropdown manager tampil/sembunyi
     editRoleSelect.dispatchEvent(new Event('change'));
 
-    // Set nilai manager jika ada
     if (userData.role === 'team_member' && userData.managerid) {
         editManagerSelect.value = userData.managerid;
     } else {
         editManagerSelect.value = '';
     }
 
-    editModal.style.display = 'flex'; // Tampilkan modal
+    editModal.style.display = 'flex';
 }
 
-// Fungsi untuk menutup modal
 function closeEditModal() {
     editModal.style.display = 'none';
 }
 
-// Tambahkan event listener ke SEMUA tombol edit di tabel
-// Kita gunakan event delegation pada body atau tabel container untuk efisiensi
 document.body.addEventListener('click', function(event) {
     if (event.target.classList.contains('edit-user-btn')) {
         const button = event.target;
@@ -126,9 +118,9 @@ document.body.addEventListener('click', function(event) {
 // Tambahkan event listener untuk tombol Batal
 cancelEditBtn.addEventListener('click', closeEditModal);
 
-// (Optional) Tutup modal jika klik di luar area modal
+// Tutup modal jika klik di luar area modal
 editModal.addEventListener('click', function(event) {
-    if (event.target === editModal) { // Cek jika target klik adalah latar belakang modal
+    if (event.target === editModal) {
         closeEditModal();
     }
 });
@@ -144,3 +136,53 @@ editRoleSelect.addEventListener('change', function() {
         editManagerSelect.value = '';
     }
 });
+
+// ============================ //
+// EDIT PROJECT MODAL LOGIC     //
+// ============================ //
+
+const editProjectModal = document.getElementById('edit-project-modal');
+const editProjectForm = document.getElementById('edit_project_form');
+const editProjectIdInput = document.getElementById('edit_project_id');
+const editProjectNameInput = document.getElementById('edit_project_name');
+const editDescriptionInput = document.getElementById('edit_description');
+const cancelEditProjectBtn = document.getElementById('cancel-edit-project-btn');
+
+function openEditProjectModal(projectData) {
+    if (!editProjectModal) return;
+
+    editProjectIdInput.value = projectData.id;
+    editProjectNameInput.value = projectData.name;
+    editDescriptionInput.value = projectData.description;
+
+    editProjectModal.style.display = 'flex';
+}
+
+function closeEditProjectModal() {
+    if (!editProjectModal) return;
+    editProjectModal.style.display = 'none';
+}
+
+document.body.addEventListener('click', function(event) {
+    if (event.target.classList.contains('edit-project-btn')) {
+        const button = event.target;
+        const projectData = {
+            id: button.dataset.id,
+            name: button.dataset.name,
+            description: button.dataset.description
+        };
+        openEditProjectModal(projectData);
+    }
+});
+
+if (cancelEditProjectBtn) {
+    cancelEditProjectBtn.addEventListener('click', closeEditProjectModal);
+}
+
+if (editProjectModal) {
+    editProjectModal.addEventListener('click', function(event) {
+        if (event.target === editProjectModal) {
+            closeEditProjectModal();
+        }
+    });
+}

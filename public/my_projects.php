@@ -15,6 +15,8 @@ if (isset($_SESSION['flash_message'])) {
     unset($_SESSION['flash_type']);
 }
 
+global $conn;
+
 ?>
 
 <div class="mx-8">
@@ -53,11 +55,12 @@ if (isset($_SESSION['flash_message'])) {
 
     <div class="mb-10 pt-6 border-t border-gray-200">
         <h2 class="font-bold text-xl mb-3">Daftar Proyek Anda</h2>
-        <div class="overflow-x-auto rounded-2xl border-2 border-gray-200 bg-white">
+        <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Nama Proyek</th>
+                        <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Deskripsi</th>
                         <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Tgl Mulai</th>
                         <th class="px-6 py-3 text-left font-bold text-gray-700 uppercase tracking-wider">Tgl Selesai</th>
                         <th class="px-6 py-3 text-center font-bold text-gray-700 uppercase tracking-wider">Tindakan</th>
@@ -65,8 +68,7 @@ if (isset($_SESSION['flash_message'])) {
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <?php
-                    // Query untuk mengambil SEMUA proyek milik manajer ini
-                    $sql_my_projects_list = "SELECT id, project_name, start_date, end_date FROM projects WHERE manager_id = ? ORDER BY id DESC";
+                    $sql_my_projects_list = "SELECT id, project_name, description, start_date, end_date FROM projects WHERE manager_id = ? ORDER BY id DESC";
                     $stmt_my_list = $conn->prepare($sql_my_projects_list);
                     $stmt_my_list->bind_param("i", $user_id);
                     $stmt_my_list->execute();
@@ -77,6 +79,7 @@ if (isset($_SESSION['flash_message'])) {
                     ?>
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 font-medium text-gray-900"><?php echo htmlspecialchars($project_row['project_name']); ?></td>
+                                <td class="px-6 py-4 text-gray-600"><?php echo htmlspecialchars(substr($project_row['description'], 0, 50)) . (strlen($project_row['description']) > 50 ? '...' : ''); ?></td>
                                 <td class="px-6 py-4 text-gray-700">
                                     <?php echo !empty($project_row['start_date']) ? date('d M Y', strtotime($project_row['start_date'])) : '-'; ?>
                                 </td>
@@ -84,7 +87,11 @@ if (isset($_SESSION['flash_message'])) {
                                     <?php echo !empty($project_row['end_date']) ? date('d M Y', strtotime($project_row['end_date'])) : '-'; ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
-                                    <button type="button" class="inline-block bg-yellow-100 text-yellow-700 hover:bg-yellow-200 px-3 py-1 rounded-md mr-2">
+                                    <button type="button"
+                                        class="edit-project-btn inline-block bg-yellow-100 text-yellow-700 hover:bg-yellow-200 px-3 py-1 rounded-md mr-2"
+                                        data-id="<?php echo $project_row['id']; ?>"
+                                        data-name="<?php echo htmlspecialchars($project_row['project_name']); ?>"
+                                        data-description="<?php echo htmlspecialchars($project_row['description']); ?>">
                                         Edit
                                     </button>
                                     <a href="../src/actions/project_actions.php?delete=<?php echo $project_row['id']; ?>"
@@ -97,7 +104,7 @@ if (isset($_SESSION['flash_message'])) {
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="4" class="px-6 py-4 text-center text-gray-500">Anda belum membuat proyek.</td>
+                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">Anda belum membuat proyek.</td>
                         </tr>
                     <?php endif;
                     $stmt_my_list->close();
@@ -107,6 +114,35 @@ if (isset($_SESSION['flash_message'])) {
         </div>
     </div>
 </div>
+
+<div id="edit-project-modal" class="fixed inset-0 backdrop-blur-sm bg-black/30 overflow-y-auto h-full w-full flex items-center justify-center" style="display: none;">
+    <div class="relative mx-auto p-8 border w-full max-w-lg shadow-lg rounded-xl bg-white">
+        <h3 class="text-xl font-bold mb-4">Edit Proyek</h3>
+        <form id="edit_project_form" method="POST" action="../src/actions/project_actions.php" class="space-y-4">
+            <input type="hidden" name="edit_project_id" id="edit_project_id">
+
+            <div class="flex flex-col gap-2">
+                <label for="edit_project_name" class="font-medium">Nama Proyek <span class="text-red-500">*</span></label>
+                <input type="text" name="edit_project_name" id="edit_project_name" required
+                    class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div class="flex flex-col gap-2">
+                <label for="edit_description" class="font-medium">Deskripsi</label>
+                <textarea name="edit_description" id="edit_description" rows="3"
+                    class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500"></textarea>
+            </div>
+            <div class="mt-6 flex justify-end gap-3">
+                <button type="button" id="cancel-edit-project-btn" class="py-2 px-4 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">
+                    Batal
+                </button>
+                <button type="submit" name="update_project" class="py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                    Simpan Perubahan
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 <?php
 require_once '../src/partials/footer_tags.php';
