@@ -186,3 +186,69 @@ if (editProjectModal) {
         });
     }
 }
+
+
+// ============================ //
+// EDIT TASK MODAL LOGIC        //
+// ============================ //
+
+// Dapatkan elemen-elemen modal edit tugas
+const editTaskModal = document.getElementById('edit-task-modal');
+const editTaskForm = document.getElementById('edit_task_form');
+const editTaskIdInput = document.getElementById('edit_task_id');
+const editTaskProjectIdInput = document.getElementById('edit_project_id_for_task'); // ID Proyek
+const editTaskProjectNameDisplay = document.getElementById('edit_task_project_name'); // Tampilan Nama Proyek
+const editTaskNameInput = document.getElementById('edit_task_name');
+const editAssignedToSelect = document.getElementById('edit_assigned_to');
+const cancelEditTaskBtn = document.getElementById('cancel-edit-task-btn');
+
+// Fungsi untuk membuka modal edit tugas dan mengisi data
+function openEditTaskModal(taskData) {
+    if (!editTaskModal) return; // Pengaman
+
+    editTaskIdInput.value = taskData.id;
+    editTaskProjectIdInput.value = taskData.projectId; // Simpan ID proyek
+    editTaskProjectNameDisplay.textContent = taskData.projectName; // Tampilkan nama proyek
+    editTaskNameInput.value = taskData.name;
+    editAssignedToSelect.value = taskData.assignedToId || ""; // Set ke ID member atau kosong jika null
+
+    editTaskModal.style.display = 'flex';
+}
+
+// Fungsi untuk menutup modal edit tugas
+function closeEditTaskModal() {
+    if (!editTaskModal) return;
+    editTaskModal.style.display = 'none';
+}
+
+// Tambahkan event listener ke SEMUA tombol edit tugas (delegation)
+// Tombol ini akan ada di halaman project_tasks.php nanti
+document.body.addEventListener('click', function(event) {
+    // Kita beri class 'edit-task-btn' pada tombol edit tugas nanti
+    if (event.target.classList.contains('edit-task-btn')) {
+        const button = event.target;
+        // Ambil semua data yang relevan dari data-* attributes tombol
+        const taskData = {
+            id: button.dataset.taskId,
+            name: button.dataset.taskName,
+            assignedToId: button.dataset.assignedId,
+            projectId: button.dataset.projectId, // Ambil ID proyek
+            projectName: button.dataset.projectName // Ambil Nama proyek
+        };
+        openEditTaskModal(taskData);
+    }
+});
+
+// Tambahkan event listener untuk tombol Batal di modal edit tugas
+if (cancelEditTaskBtn) {
+    cancelEditTaskBtn.addEventListener('click', closeEditTaskModal);
+}
+
+// Tutup modal jika klik di luar area modal edit tugas
+if (editTaskModal) {
+    editTaskModal.addEventListener('click', function(event) {
+        if (event.target === editTaskModal) {
+            closeEditTaskModal();
+        }
+    });
+}
