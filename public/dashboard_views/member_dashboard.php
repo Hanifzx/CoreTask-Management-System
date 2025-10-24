@@ -12,7 +12,7 @@ $stmt_total->close();
 
 // Tugas Diproses (Status 'pending' atau 'in_progress')
 // Menggunakan 'pending' dan 'in_progress' sebagai status belum selesai
-$sql_progress_tasks = "SELECT COUNT(id) AS total FROM tasks WHERE assigned_to = ? AND (status = 'pending' OR status = 'in_progress')";
+$sql_progress_tasks = "SELECT COUNT(id) AS total FROM tasks WHERE assigned_to = ? AND status = 'proses'";
 $stmt_progress = $conn->prepare($sql_progress_tasks);
 $stmt_progress->bind_param("i", $user_id);
 $stmt_progress->execute();
@@ -20,7 +20,7 @@ $progress_tasks = $stmt_progress->get_result()->fetch_assoc()['total'];
 $stmt_progress->close();
 
 // Tugas Selesai (Status 'completed')
-$sql_completed_tasks = "SELECT COUNT(id) AS total FROM tasks WHERE assigned_to = ? AND status = 'completed'";
+$sql_completed_tasks = "SELECT COUNT(id) AS total FROM tasks WHERE assigned_to = ? AND status = 'selesai'";
 $stmt_completed = $conn->prepare($sql_completed_tasks);
 $stmt_completed->bind_param("i", $user_id);
 $stmt_completed->execute();
@@ -92,9 +92,9 @@ $stmt_completed->close();
                         t.assigned_to = ?
                     ORDER BY
                         CASE t.status
-                            WHEN 'pending' THEN 1
-                            WHEN 'in_progress' THEN 2
-                            WHEN 'completed' THEN 3
+                            WHEN 'proses' THEN 1
+                            WHEN 'belum' THEN 2
+                            WHEN 'selesai' THEN 3
                             ELSE 4
                         END, t.id DESC
                 ";

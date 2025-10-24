@@ -243,10 +243,12 @@ $user_id = $_SESSION['user_id'];
                                 </td>
                                 <td class="px-6 py-4 text-gray-700">
                                     <?php
-                                    if ($task_row['status'] == 'completed' || $task_row['status'] == 'selesai') {
+                                    if ($task_row['status'] == 'selesai') {
                                         echo '<span class="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Selesai</span>';
+                                    } elseif ($task_row['status'] == 'proses') {
+                                        echo '<span class="inline-flex items-center rounded-md bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800 ring-1 ring-inset ring-blue-600/20">Proses</span>';
                                     } else {
-                                        echo '<span class="inline-flex items-center rounded-md bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Belum Selesai</span>';
+                                        echo '<span class="inline-flex items-center rounded-md bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Belum</span>';
                                     }
                                     ?>
                                 </td>

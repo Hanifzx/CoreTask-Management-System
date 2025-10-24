@@ -24,7 +24,7 @@ $users = [
             'manager_id' => 2 // Melapor ke Azril (ID 2)
         ],
         [
-            'username' => 'wibowo',
+            'username' => 'fuad',
             'password' => 'wibowo123', // PW Team Member 2
             'role' => 'team_member',
             'manager_id' => 2 // Melapor ke Azril (ID 2)
