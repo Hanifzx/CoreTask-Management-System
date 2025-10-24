@@ -260,11 +260,11 @@ $user_id = $_SESSION['user_id'];
                                         class="edit-task-btn inline-block bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1 rounded-md mr-2"
                                         data-task-id="<?php echo $task_row['task_id']; ?>"
                                         data-task-name="<?php echo htmlspecialchars($task_row['task_name']); ?>"
-                                        data-assigned-id="<?php echo $task_row['assigned_to'] ?? ''; // Ambil ID member yg ditugaskan 
+                                        data-assigned-id="<?php echo $task_row['assigned_to'] ?? '';
                                                             ?>"
-                                        data-project-id="<?php echo $task_row['project_id']; // Ambil ID proyek 
+                                        data-project-id="<?php echo $task_row['project_id'];
                                                             ?>"
-                                        data-project-name="<?php echo htmlspecialchars($task_row['project_name']); // Ambil nama proyek 
+                                        data-project-name="<?php echo htmlspecialchars($task_row['project_name']);
                                                             ?>">
                                         Edit
                                     </button>

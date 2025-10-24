@@ -18,6 +18,12 @@ $users = [
             'manager_id' => null
         ],
         [
+            'username' => 'faiz',
+            'password' => 'faiz123', // PW Project Manager 3
+            'role' => 'project_manager',
+            'manager_id' => null
+        ],
+        [
             'username' => 'rusdi',
             'password' => 'rusdi123', // PW Team Member 1
             'role' => 'team_member',
@@ -25,7 +31,7 @@ $users = [
         ],
         [
             'username' => 'fuad',
-            'password' => 'wibowo123', // PW Team Member 2
+            'password' => 'fuad123', // PW Team Member 2
             'role' => 'team_member',
             'manager_id' => 2 // Melapor ke Azril (ID 2)
         ],
@@ -41,6 +47,16 @@ $users = [
             'role' => 'team_member',
             'manager_id' => 3 // Melapor ke Andreana (ID 3)
         ],
+        [
+            'username' => 'reza',
+            'password' => 'reza123',
+            'role' = 'team_member'
+        ]
+        [
+            'username' => 'gilang',
+            'password' => 'gilang123',
+            'role' = 'team_member'
+        ]
         [
             'username' => 'reza',
             'password' => 'reza123',

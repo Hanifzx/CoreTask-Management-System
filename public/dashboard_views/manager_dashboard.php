@@ -122,7 +122,18 @@ $stmt_my_team->close();
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4 font-medium"><?php echo $row['id']; ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($row['task_name']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars(ucfirst($row['status'])); ?></td>
+                        <td class="px-6 py-4">
+                            <?php
+                            // echo htmlspecialchars(ucfirst($row['status'])); 
+                            if ($row['status'] == 'selesai') {
+                                echo '<span class="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Selesai</span>';
+                            } elseif ($row['status'] == 'proses') {
+                                echo '<span class="inline-flex items-center rounded-md bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800 ring-1 ring-inset ring-blue-600/20">Proses</span>';
+                            } else {
+                                echo '<span class="inline-flex items-center rounded-md bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Belum</span>';
+                            }
+                            ?>
+                        </td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars(ucfirst($row['assigned_to_name'])); ?></td>
                     </tr>
                 <?php 
