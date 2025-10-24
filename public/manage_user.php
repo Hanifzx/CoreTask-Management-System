@@ -6,7 +6,6 @@ if ($role !== 'super_admin') {
     exit();
 }
 
-// 3. Ambil pesan flash dari session (jika ada setelah redirect dari aksi)
 $message = '';
 $message_type = '';
 if (isset($_SESSION['flash_message'])) {
@@ -62,7 +61,6 @@ if (isset($_SESSION['flash_message'])) {
                         class="border-2 border-gray-300 rounded-xl p-2 cursor-not-allowed text-gray-300" disabled>
                         <option id="manager_option" value="">Hanya untuk Team Member</option>
                         <?php
-                        // Query lagi untuk dropdown tambah
                         $sql_managers = "SELECT id, username FROM users WHERE role = 'project_manager' ORDER BY username ASC";
                         $result_managers = $conn->query($sql_managers);
                         if ($result_managers && $result_managers->num_rows > 0) {
@@ -98,7 +96,6 @@ if (isset($_SESSION['flash_message'])) {
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <?php
-                    // Query untuk mengambil SEMUA user (PM & Member) + nama manajernya
                     $sql_all_users = "
                         SELECT
                             u.id,
@@ -182,7 +179,6 @@ if (isset($_SESSION['flash_message'])) {
                 <select name="edit_project_manager_id" id="edit_project_manager_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     <option value="">-- Pilih Manajer --</option>
                     <?php
-                    // Query lagi untuk dropdown di modal edit
                     $sql_managers_edit = "SELECT id, username FROM users WHERE role = 'project_manager' ORDER BY username ASC";
                     $result_managers_edit = $conn->query($sql_managers_edit);
                     if ($result_managers_edit && $result_managers_edit->num_rows > 0) {

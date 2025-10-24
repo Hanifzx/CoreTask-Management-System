@@ -101,6 +101,5 @@ if (isset($_SESSION['flash_message'])) {
         </div>
     </div>
 </div> <?php
-        // 4. Panggil tag penutup
         require_once '../src/partials/footer_tags.php';
         ?>

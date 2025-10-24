@@ -26,7 +26,6 @@ $stmt_my_team->close();
         <p class="font-semibold text-sm text-gray-500">Berikut ringkasan proyek dan tim Anda</p>
     </div>
 
-    <!-- Kartu Statistik -->
     <div id="card-container" class="flex gap-6 mx-8">
         <div class="w-1/4 bg-white px-6 py-6 border-2 border-gray-200 rounded-2xl">
             <div class="mb-2 flex justify-between items-center">
@@ -46,7 +45,6 @@ $stmt_my_team->close();
         </div>
     </div>
 
-    <!-- Tabel Proyek Terkini -->
     <div class="px-8 py-2 mt-8 flex flex-col justify-center items-start">
         <h1 class="font-bold text-xl">Proyek Terkini Anda</h1>
     </div>
@@ -90,7 +88,6 @@ $stmt_my_team->close();
         </table>
     </div>
 
-    <!-- Tabel Daftar Tugas -->
     <div class="px-8 py-2 mt-8 flex flex-col justify-center items-start">
         <h1 class="font-bold text-xl">Daftar Tugas Terkini</h1>
     </div>

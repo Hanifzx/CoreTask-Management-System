@@ -1,8 +1,6 @@
 <?php
-// Selalu panggil koneksi di file aksi juga
 require_once __DIR__ . '/../config/connection.php';
 
-// Pastikan hanya Super Admin yang bisa menjalankan aksi ini
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'super_admin') {
     header('Location: ../../public/dashboard.php');
     exit();
@@ -151,10 +149,6 @@ if (isset($_GET['delete_project'])) {
     header("Location: ../../public/view_all_projects.php");
     exit();
 }
-
-// ===================================
-// JIKA TIDAK ADA AKSI DI ATAS
-// ===================================
 
 // Jika tidak ada aksi yang cocok, redirect ke halaman utama admin
 header("Location: ../../public/manage_user.php");

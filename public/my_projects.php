@@ -40,26 +40,95 @@ $user_id = $_SESSION['user_id'];
         </div>
     <?php endif; ?>
 
-    <div class="flex flex-col bg-white px-5 py-5 rounded-2xl border-2 border-gray-200 mt-2 mb-8">
-        <h2 class="font-bold text-xl mb-4">Tambah Proyek Baru</h2>
-        <form method="POST" action="../src/actions/project_actions.php" class="space-y-3">
-            <div class="flex flex-col gap-2">
-                <label for="project_name" class="font-medium">Nama Proyek <span class="text-red-500">*</span></label>
-                <input type="text" name="project_name" id="project_name" placeholder="Masukkan nama proyek" required
-                    class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500">
-            </div>
-            <div class="flex flex-col gap-2">
-                <label for="description" class="font-medium">Deskripsi</label>
-                <textarea name="description" id="description" rows="3" placeholder="Masukkan deskripsi singkat proyek"
-                    class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500"></textarea>
-            </div>
-            <div class="flex justify-end">
-                <button type="submit" name="add_project"
-                    class="w-40 mt-2 justify-center items-center bg-blue-600 text-white text-sm font-semibold px-2 py-2 rounded-xl hover:bg-blue-700 transition">
-                    + Tambah Proyek
-                </button>
-            </div>
-        </form>
+    <div class="flex flex-col md:flex-row gap-8 mb-8">
+        <div class="flex-1 flex flex-col bg-white px-6 py-6 rounded-2xl border-2 border-gray-200">
+            <h2 class="font-bold text-xl mb-4">Tambah Proyek Baru</h2>
+            <form method="POST" action="../src/actions/project_actions.php" class="space-y-3">
+                <div class="flex flex-col gap-2">
+                    <label for="project_name" class="font-medium">Nama Proyek <span class="text-red-500">*</span></label>
+                    <input type="text" name="project_name" id="project_name" placeholder="Masukkan nama proyek" required
+                        class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="description" class="font-medium">Deskripsi</label>
+                    <textarea name="description" id="description" rows="3" placeholder="Masukkan deskripsi singkat proyek"
+                        class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500"></textarea>
+                </div>
+                <div class="flex justify-end mt-4">
+                    <button type="submit" name="add_project"
+                        class="w-40 justify-center items-center bg-blue-600 text-white text-sm font-semibold px-2 py-2 rounded-xl hover:bg-blue-700 transition">
+                        + Tambah Proyek
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="flex-1 flex flex-col bg-white px-6 py-6 rounded-2xl border-2 border-gray-200">
+            <h2 class="font-bold text-xl mb-4">Tambah Tugas Baru</h2>
+            <form method="POST" action="../src/actions/task_actions.php" class="space-y-3">
+                <div class="flex flex-col gap-2">
+                    <label for="task_project_id" class="font-medium">Pilih Proyek <span class="text-red-500">*</span></label>
+                    <select name="task_project_id" id="task_project_id" required
+                        class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">-- Pilih Proyek --</option>
+                        <?php
+                        $sql_my_proj_options = "SELECT id, project_name FROM projects WHERE manager_id = ? ORDER BY project_name ASC";
+                        $stmt_proj_options = $conn->prepare($sql_my_proj_options);
+                        $stmt_proj_options->bind_param("i", $user_id);
+                        $stmt_proj_options->execute();
+                        $result_proj_options = $stmt_proj_options->get_result();
+                        if ($result_proj_options->num_rows > 0) {
+                            while ($proj_option = $result_proj_options->fetch_assoc()) {
+                                echo '<option value="' . $proj_option['id'] . '">' . htmlspecialchars($proj_option['project_name']) . '</option>';
+                            }
+                        } else {
+                            echo '<option disabled>Anda belum punya proyek</option>';
+                        }
+                        $stmt_proj_options->close();
+                        ?>
+                    </select>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="task_name" class="font-medium">Nama Tugas <span class="text-red-500">*</span></label>
+                    <input type="text" name="task_name" id="task_name" placeholder="Masukkan nama tugas" required
+                        class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="task_description" class="font-medium">Deskripsi Tugas</label>
+                    <textarea name="task_description" id="task_description" rows="1" placeholder="Masukkan deskripsi singkat tugas"
+                        class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500"></textarea>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="assigned_to" class="font-medium">Ditugaskan Kepada <span class="text-red-500">*</span></label>
+                    <select name="assigned_to" id="assigned_to" required
+                        class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">-- Pilih Anggota Tim --</option>
+                        <?php
+                        $sql_my_team = "SELECT id, username FROM users WHERE role = 'team_member' AND project_manager_id = ? ORDER BY username ASC";
+                        $stmt_team = $conn->prepare($sql_my_team);
+                        $stmt_team->bind_param("i", $user_id);
+                        $stmt_team->execute();
+                        $result_team = $stmt_team->get_result();
+                        if ($result_team->num_rows > 0) {
+                            while ($member = $result_team->fetch_assoc()) {
+                                echo '<option value="' . $member['id'] . '">' . htmlspecialchars(ucfirst($member['username'])) . '</option>';
+                            }
+                        } else {
+                            echo '<option disabled>Anda belum punya anggota tim</option>';
+                        }
+                        $stmt_team->close();
+                        ?>
+                    </select>
+                </div>
+                <div class="flex justify-end mt-4">
+                    <button type="submit" name="add_task"
+                        class="w-40 justify-center items-center bg-blue-600 text-white text-sm font-semibold px-2 py-2 rounded-xl hover:bg-green-700 transition">
+                        + Tambah Tugas
+                    </button>
+                </div>
+            </form>
+        </div>
+
     </div>
 
     <div class="mb-5 border-t border-gray-200">
@@ -260,10 +329,8 @@ $user_id = $_SESSION['user_id'];
                     class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500">
                     <option value="">-- Tidak Ditugaskan --</option>
                     <?php
-                    // Query untuk mengambil HANYA team member di bawah manajer ini
                     $sql_my_team_members = "SELECT id, username FROM users WHERE role = 'team_member' AND project_manager_id = ? ORDER BY username ASC";
                     $stmt_team_members = $conn->prepare($sql_my_team_members);
-                    // Pastikan $user_id (ID Manajer) tersedia di scope ini
                     if (isset($user_id)) {
                         $stmt_team_members->bind_param("i", $user_id);
                         $stmt_team_members->execute();
@@ -276,7 +343,6 @@ $user_id = $_SESSION['user_id'];
                         }
                         $stmt_team_members->close();
                     } else {
-                        // Handle kasus jika $user_id tidak ada (seharusnya tidak terjadi jika user login)
                         echo '<option disabled>Error: User ID tidak ditemukan.</option>';
                     }
                     ?>

@@ -192,7 +192,6 @@ if (editProjectModal) {
 // EDIT TASK MODAL LOGIC        //
 // ============================ //
 
-// Dapatkan elemen-elemen modal edit tugas
 const editTaskModal = document.getElementById('edit-task-modal');
 const editTaskForm = document.getElementById('edit_task_form');
 const editTaskIdInput = document.getElementById('edit_task_id');
@@ -227,19 +226,17 @@ document.body.addEventListener('click', function(event) {
     // Kita beri class 'edit-task-btn' pada tombol edit tugas nanti
     if (event.target.classList.contains('edit-task-btn')) {
         const button = event.target;
-        // Ambil semua data yang relevan dari data-* attributes tombol
         const taskData = {
             id: button.dataset.taskId,
             name: button.dataset.taskName,
             assignedToId: button.dataset.assignedId,
-            projectId: button.dataset.projectId, // Ambil ID proyek
-            projectName: button.dataset.projectName // Ambil Nama proyek
+            projectId: button.dataset.projectId,
+            projectName: button.dataset.projectName
         };
         openEditTaskModal(taskData);
     }
 });
 
-// Tambahkan event listener untuk tombol Batal di modal edit tugas
 if (cancelEditTaskBtn) {
     cancelEditTaskBtn.addEventListener('click', closeEditTaskModal);
 }
