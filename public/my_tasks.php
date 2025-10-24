@@ -95,7 +95,7 @@ if (isset($_SESSION['flash_message'])) {
                                 <td class="px-6 py-4 font-medium text-gray-800"><?php echo htmlspecialchars($row['task_name']); ?></td>
                                 <td class="px-6 py-4 text-gray-600"><?php echo htmlspecialchars(substr($row['description'], 0, 70)) . (strlen($row['description']) > 70 ? '...' : ''); ?></td>
                                 
-                                <form method="POST" action="../src/actions/member_task_actions.php">
+                                <form method="POST" action="../src/actions/task_actions.php">
                                     <input type="hidden" name="task_id" value="<?php echo $row['task_id']; ?>">
                                     
                                     <td class="px-6 py-4">
