@@ -207,23 +207,25 @@ $user_id = $_SESSION['user_id'];
                 <tbody class="bg-white divide-y divide-gray-200">
                     <?php
                     $sql_all_tasks = "
-                            SELECT 
-                                t.id AS task_id, 
-                                t.task_name, 
-                                t.status, 
-                                p.project_name, 
-                                u.username AS member_name
-                            FROM 
-                                tasks t
-                            JOIN 
-                                projects p ON t.project_id = p.id
-                            LEFT JOIN 
-                                users u ON t.assigned_to = u.id
-                            WHERE 
-                                p.manager_id = ? 
-                            ORDER BY 
-                                p.project_name, t.id DESC
-                        ";
+                        SELECT
+                            t.id AS task_id,
+                            t.task_name,
+                            t.status,
+                            p.project_name,
+                            p.id AS project_id,  -- Tambahkan ini
+                            t.assigned_to,       -- Tambahkan ini
+                            u.username AS member_name
+                        FROM
+                            tasks t
+                        JOIN
+                            projects p ON t.project_id = p.id
+                        LEFT JOIN
+                            users u ON t.assigned_to = u.id
+                        WHERE
+                            p.manager_id = ?
+                        ORDER BY
+                            p.project_name, t.id DESC
+                    ";
                     $stmt_all_tasks = $conn->prepare($sql_all_tasks);
                     $stmt_all_tasks->bind_param("i", $user_id);
                     $stmt_all_tasks->execute();
@@ -253,13 +255,22 @@ $user_id = $_SESSION['user_id'];
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
                                     <button type="button"
-                                        class="inline-block bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1 rounded-md mr-2">
+                                        class="edit-task-btn inline-block bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1 rounded-md mr-2"
+                                        data-task-id="<?php echo $task_row['task_id']; ?>"
+                                        data-task-name="<?php echo htmlspecialchars($task_row['task_name']); ?>"
+                                        data-assigned-id="<?php echo $task_row['assigned_to'] ?? ''; // Ambil ID member yg ditugaskan 
+                                                            ?>"
+                                        data-project-id="<?php echo $task_row['project_id']; // Ambil ID proyek 
+                                                            ?>"
+                                        data-project-name="<?php echo htmlspecialchars($task_row['project_name']); // Ambil nama proyek 
+                                                            ?>">
                                         Edit
                                     </button>
-                                    <button type="button"
-                                        class="inline-block bg-red-100 text-red-600 hover:bg-red-200 px-3 py-1 rounded-md mr-2">
+                                    <a href="../src/actions/task_actions.php?delete_task=<?php echo $task_row['task_id']; ?>"
+                                        class="inline-block bg-red-100 text-red-600 hover:bg-red-200 px-3 py-1 rounded-md"
+                                        onclick="return confirmDelete('tugas <?php echo htmlspecialchars($task_row['task_name']); ?>');">
                                         Hapus
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
                         <?php endwhile; ?>
@@ -277,7 +288,7 @@ $user_id = $_SESSION['user_id'];
 </div>
 </div>
 
-
+<!-- Pop-up modal edit proyek -->
 <div id="edit-project-modal" class="fixed inset-0 backdrop-blur-sm bg-black/30 overflow-y-auto h-full w-full flex items-center justify-center" style="display: none;">
     <div class="relative mx-auto p-8 border w-full max-w-lg shadow-lg rounded-xl bg-white">
         <h3 class="text-xl font-bold mb-4">Edit Proyek</h3>
@@ -306,6 +317,7 @@ $user_id = $_SESSION['user_id'];
     </div>
 </div>
 
+<!-- Pop-up modal edit tugas -->
 <div id="edit-task-modal" class="fixed inset-0 backdrop-blur-sm bg-black/30 overflow-y-auto h-full w-full flex items-center justify-center" style="display: none;">
     <div class="relative mx-auto p-8 border w-full max-w-lg shadow-lg rounded-xl bg-white">
         <h3 class="text-xl font-bold mb-4">Edit Tugas</h3>
