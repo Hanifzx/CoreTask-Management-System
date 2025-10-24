@@ -133,7 +133,7 @@ $user_id = $_SESSION['user_id'];
 
     <div class="mb-5 border-t border-gray-200">
         <h2 class="font-bold text-xl mb-3">Daftar Proyek Anda</h2>
-        <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+        <div class="overflow-x-auto rounded-2xl border-2 border-gray-200 bg-white">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
                 <thead class="bg-gray-50">
                     <tr>
@@ -193,7 +193,7 @@ $user_id = $_SESSION['user_id'];
     </div>
     <div class="mb-10 pt-2 border-t border-gray-200">
         <h2 class="font-bold text-xl mb-3">Daftar Tugas di Bawah Proyek Anda</h2>
-        <div class="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+        <div class="overflow-x-auto rounded-2xl border-2 border-gray-200 bg-white">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
                 <thead class="bg-gray-50">
                     <tr>
