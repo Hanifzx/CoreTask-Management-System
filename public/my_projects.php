@@ -70,7 +70,7 @@ $user_id = $_SESSION['user_id'];
                     <label for="task_project_id" class="font-medium">Pilih Proyek <span class="text-red-500">*</span></label>
                     <select name="task_project_id" id="task_project_id" required
                         class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500">
-                        <option value="">-- Pilih Proyek --</option>
+                        <option value="">Pilih Proyek</option>
                         <?php
                         $sql_my_proj_options = "SELECT id, project_name FROM projects WHERE manager_id = ? ORDER BY project_name ASC";
                         $stmt_proj_options = $conn->prepare($sql_my_proj_options);
@@ -102,7 +102,7 @@ $user_id = $_SESSION['user_id'];
                     <label for="assigned_to" class="font-medium">Ditugaskan Kepada <span class="text-red-500">*</span></label>
                     <select name="assigned_to" id="assigned_to" required
                         class="border-2 border-gray-300 rounded-xl p-2 focus:border-blue-500 focus:ring-blue-500">
-                        <option value="">-- Pilih Anggota Tim --</option>
+                        <option value="">Pilih Anggota Tim</option>
                         <?php
                         $sql_my_team = "SELECT id, username FROM users WHERE role = 'team_member' AND project_manager_id = ? ORDER BY username ASC";
                         $stmt_team = $conn->prepare($sql_my_team);
@@ -122,7 +122,7 @@ $user_id = $_SESSION['user_id'];
                 </div>
                 <div class="flex justify-end mt-4">
                     <button type="submit" name="add_task"
-                        class="w-40 justify-center items-center bg-blue-600 text-white text-sm font-semibold px-2 py-2 rounded-xl hover:bg-green-700 transition">
+                        class="w-40 justify-center items-center bg-blue-600 text-white text-sm font-semibold px-2 py-2 rounded-xl hover:bg-blue-700 transition">
                         + Tambah Tugas
                     </button>
                 </div>
@@ -166,7 +166,7 @@ $user_id = $_SESSION['user_id'];
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
                                     <button type="button"
-                                        class="edit-project-btn inline-block bg-yellow-100 text-yellow-700 hover:bg-yellow-200 px-3 py-1 rounded-md mr-2"
+                                        class="edit-project-btn inline-block bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1 rounded-md mr-2"
                                         data-id="<?php echo $project_row['id']; ?>"
                                         data-name="<?php echo htmlspecialchars($project_row['project_name']); ?>"
                                         data-description="<?php echo htmlspecialchars($project_row['description']); ?>">
@@ -242,9 +242,9 @@ $user_id = $_SESSION['user_id'];
                                 <td class="px-6 py-4 text-gray-700">
                                     <?php
                                     if ($task_row['status'] == 'completed' || $task_row['status'] == 'selesai') {
-                                        echo '<span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Selesai</span>';
+                                        echo '<span class="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Selesai</span>';
                                     } else {
-                                        echo '<span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Belum Selesai</span>';
+                                        echo '<span class="inline-flex items-center rounded-md bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Belum Selesai</span>';
                                     }
                                     ?>
                                 </td>
@@ -253,11 +253,11 @@ $user_id = $_SESSION['user_id'];
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
                                     <button type="button"
-                                        class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-md mr-2 opacity-50 cursor-not-allowed">
+                                        class="inline-block bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1 rounded-md mr-2">
                                         Edit
                                     </button>
                                     <button type="button"
-                                        class="inline-block bg-red-100 text-red-600 px-3 py-1 rounded-md opacity-50 cursor-not-allowed">
+                                        class="inline-block bg-red-100 text-red-600 hover:bg-red-200 px-3 py-1 rounded-md mr-2">
                                         Hapus
                                     </button>
                                 </td>
