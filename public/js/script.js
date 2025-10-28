@@ -74,7 +74,7 @@ if (editModal) {
     const editRoleSelect = document.getElementById('edit_role');
     const editManagerDiv = document.getElementById('edit-manager-dropdown');
     const editManagerSelect = document.getElementById('edit_project_manager_id');
-    const cancelEditBtn = document.getElementById('cancel-edit-btn'); // <-- Ini yang menyebabkan error
+    const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
     // Fungsi untuk membuka modal dan mengisi data
     function openEditModal(userData) {
@@ -195,22 +195,21 @@ if (editProjectModal) {
 const editTaskModal = document.getElementById('edit-task-modal');
 const editTaskForm = document.getElementById('edit_task_form');
 const editTaskIdInput = document.getElementById('edit_task_id');
-const editTaskProjectIdInput = document.getElementById('edit_project_id_for_task'); // ID Proyek
-const editTaskProjectNameDisplay = document.getElementById('edit_task_project_name'); // Tampilan Nama Proyek
+const editTaskProjectIdInput = document.getElementById('edit_project_id_for_task'); 
+const editTaskProjectNameDisplay = document.getElementById('edit_task_project_name'); 
 const editTaskNameInput = document.getElementById('edit_task_name');
 const editAssignedToSelect = document.getElementById('edit_assigned_to');
 const cancelEditTaskBtn = document.getElementById('cancel-edit-task-btn');
 
 // Fungsi untuk membuka modal edit tugas dan mengisi data
 function openEditTaskModal(taskData) {
-    if (!editTaskModal) return; // Pengaman
+    if (!editTaskModal) return;
 
     editTaskIdInput.value = taskData.id;
-    editTaskProjectIdInput.value = taskData.projectId; // Simpan ID proyek
-    editTaskProjectNameDisplay.textContent = taskData.projectName; // Tampilkan nama proyek
+    editTaskProjectIdInput.value = taskData.projectId; 
+    editTaskProjectNameDisplay.textContent = taskData.projectName;
     editTaskNameInput.value = taskData.name;
     editAssignedToSelect.value = taskData.assignedToId || ""; // Set ke ID member atau kosong jika null
-
     editTaskModal.style.display = 'flex';
 }
 
