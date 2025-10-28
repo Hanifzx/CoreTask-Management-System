@@ -10,8 +10,7 @@ $stmt_total->execute();
 $total_tasks = $stmt_total->get_result()->fetch_assoc()['total'];
 $stmt_total->close();
 
-// Tugas Diproses (Status 'pending' atau 'in_progress')
-// Menggunakan 'pending' dan 'in_progress' sebagai status belum selesai
+// Status tugas: proses
 $sql_progress_tasks = "SELECT COUNT(id) AS total FROM tasks WHERE assigned_to = ? AND status = 'proses'";
 $stmt_progress = $conn->prepare($sql_progress_tasks);
 $stmt_progress->bind_param("i", $user_id);
@@ -19,7 +18,7 @@ $stmt_progress->execute();
 $progress_tasks = $stmt_progress->get_result()->fetch_assoc()['total'];
 $stmt_progress->close();
 
-// Tugas Selesai (Status 'completed')
+// Status tugas: selesai
 $sql_completed_tasks = "SELECT COUNT(id) AS total FROM tasks WHERE assigned_to = ? AND status = 'selesai'";
 $stmt_completed = $conn->prepare($sql_completed_tasks);
 $stmt_completed->bind_param("i", $user_id);

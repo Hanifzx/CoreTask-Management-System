@@ -6,6 +6,7 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Cek jika form telah dikirim (tombol login ditekan)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];

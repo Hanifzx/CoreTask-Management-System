@@ -220,10 +220,8 @@ function closeEditTaskModal() {
     editTaskModal.style.display = 'none';
 }
 
-// Tambahkan event listener ke SEMUA tombol edit tugas (delegation)
-// Tombol ini akan ada di halaman project_tasks.php nanti
+// Tambahkan event listener ke SEMUA tombol edit tugas
 document.body.addEventListener('click', function(event) {
-    // Kita beri class 'edit-task-btn' pada tombol edit tugas nanti
     if (event.target.classList.contains('edit-task-btn')) {
         const button = event.target;
         const taskData = {

@@ -124,7 +124,6 @@ $stmt_my_team->close();
                         <td class="px-6 py-4"><?php echo htmlspecialchars($row['task_name']); ?></td>
                         <td class="px-6 py-4">
                             <?php
-                            // echo htmlspecialchars(ucfirst($row['status'])); 
                             if ($row['status'] == 'selesai') {
                                 echo '<span class="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Selesai</span>';
                             } elseif ($row['status'] == 'proses') {

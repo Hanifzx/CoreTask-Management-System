@@ -42,7 +42,6 @@ $sql_pm_list = "
         users.id, users.username
     ORDER BY 
         total_proyek DESC
-    LIMIT 5
 ";
 $result_pm_list = $conn->query($sql_pm_list);
 
@@ -65,7 +64,6 @@ $sql_member_list = "
         members.id, members.username, managers.username
     ORDER BY 
         total_tugas DESC
-    LIMIT 5
 ";
 
 // Mengambil data project
@@ -81,14 +79,11 @@ $sql_project_list = "
         users ON projects.manager_id = users.id
     ORDER BY 
         projects.end_date ASC
-    LIMIT 5 
 ";
 
 $result_project_list = $conn->query($sql_project_list);
 
 $result_member_list = $conn->query($sql_member_list);
-
-// require_once '../src/partials/sidebar.php';
 ?>
 
 <div class="mx-2">
@@ -134,7 +129,7 @@ $result_member_list = $conn->query($sql_member_list);
                 <tr>
                     <th class="px-6 py-3 text-left">ID</th>
                     <th class="px-6 py-3 text-left">Nama Proyek</th>
-                    <th class="px-6 py-3 text-center">Deadline</th>
+                    <th class="px-6 py-3 text-center">Tanggal Selesai</th>
                     <th class="px-6 py-3 text-left">Manajer Proyek</th>
                 </tr>
             </thead>
@@ -149,8 +144,8 @@ $result_member_list = $conn->query($sql_member_list);
                     <td class="px-6 py-4 text-center text-gray-700">
                         <?php 
                         if (!empty($row['end_date'])) {
-                            $deadline = new DateTime($row['end_date']);
-                            echo $deadline->format('d-m-Y'); 
+                            $end_date = new DateTime($row['end_date']);
+                            echo $end_date->format('d-m-Y'); 
                         } else {
                             echo '-';
                         }
