@@ -49,8 +49,6 @@ $manager_id = $_SESSION['user_id'];
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <?php
-                    // Query untuk mengambil anggota tim di bawah manajer ini,
-                    // beserta daftar proyek dan tugas yang sedang dikerjakan (belum selesai)
                     $sql_team_details = "
                         SELECT
                             u.id AS member_id,
@@ -72,7 +70,6 @@ $manager_id = $_SESSION['user_id'];
                     ";
                     
                     $stmt_team_details = $conn->prepare($sql_team_details);
-                    // Bind manager_id dua kali: sekali untuk JOIN projects, sekali untuk WHERE users
                     $stmt_team_details->bind_param("ii", $manager_id, $manager_id);
                     $stmt_team_details->execute();
                     $result_team_details = $stmt_team_details->get_result();

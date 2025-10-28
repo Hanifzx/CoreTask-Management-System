@@ -1,30 +1,39 @@
+// ============================================================
+// KONFIRMASI PENGHAPUSAN
+// ============================================================
 function confirmDelete(message) {
+    // Menampilkan kotak konfirmasi sebelum menghapus data.
     return confirm('Apakah Anda yakin ingin menghapus ' + message + '? Tindakan ini tidak dapat dibatalkan.');
 }
 
+// Debugging: memastikan script berhasil dimuat di browser
 console.log("Script.js berhasil dimuat");
 
-// ============================ //
-// Manage User Page (for admin) //
-// ============================ //
+// ============================================================
+// MANAJEMEN USER (Hanya untuk Super Admin di manage_user.php)
+// ============================================================
 
-// jika role yang dipilih === 'team_member' saat menambahkan pengguna //
+// Tangkap form tambah user
 const addUserForm = document.getElementById('add_user_form');
 if (addUserForm) {
+    // Elemen dropdown role dan manager
     const roleDropdown = document.getElementById('role');
     const managerSelect = document.getElementById('project_manager_id');
     const managerLabel = document.getElementById('manager_label');
     const managerOption = document.getElementById('manager_option');
 
+    // Event: ubah warna teks dan aktifkan/disable dropdown manager
     roleDropdown.addEventListener('change', function() {
+        // Ubah warna teks role dropdown
         if (this.value) {
             this.classList.remove('text-gray-400');
             this.classList.add('text-black');
-            } else {
+        } else {
             this.classList.remove('text-black');
             this.classList.add('text-gray-400');
         }
 
+        // Jika role = team_member → tampilkan dropdown manager
         if (this.value === 'team_member') {
             managerSelect.disabled = false;
             managerOption.textContent = 'Pilih Manager';
@@ -32,6 +41,7 @@ if (addUserForm) {
             managerSelect.classList.replace('text-gray-300', 'text-black');
             managerSelect.classList.replace('cursor-not-allowed', 'cursor-pointer');
         } else {
+            // Selain itu → nonaktifkan dropdown manager
             managerSelect.disabled = true;
             managerOption.textContent = 'Hanya untuk Team Member';
             managerLabel.classList.replace('text-black', 'text-gray-300');
@@ -41,7 +51,7 @@ if (addUserForm) {
         }
     });
 
-    // Validasi sebelum submit
+    // Validasi sebelum form dikirim
     addUserForm.addEventListener('submit', function(e) {
         const roleValue = roleDropdown.value;
         const managerValue = managerSelect.value;
@@ -60,13 +70,14 @@ if (addUserForm) {
     });
 }
 
-// ============================ //
-// EDIT USER MODAL LOGIC        //
-// ============================ //
+// ============================================================
+// LOGIKA MODAL EDIT USER (Admin/Super Admin)
+// ============================================================
 
 const editModal = document.getElementById('edit-user-modal');
 
 if (editModal) {
+    // Ambil semua elemen input di modal
     const editForm = document.getElementById('edit_user_form');
     const editUserIdInput = document.getElementById('edit_user_id');
     const editUsernameInput = document.getElementById('edit_username');
@@ -76,28 +87,32 @@ if (editModal) {
     const editManagerSelect = document.getElementById('edit_project_manager_id');
     const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
-    // Fungsi untuk membuka modal dan mengisi data
+    // Fungsi buka modal dan isi data dari tombol edit
     function openEditModal(userData) {
         editUserIdInput.value = userData.id;
         editUsernameInput.value = userData.username;
-        editPasswordInput.value = '';
+        editPasswordInput.value = ''; // kosongkan password
         editRoleSelect.value = userData.role;
 
+        // Trigger event untuk tampilkan dropdown manager jika perlu
         editRoleSelect.dispatchEvent(new Event('change'));
 
+        // Isi dropdown manager jika role = team_member
         if (userData.role === 'team_member' && userData.managerid) {
             editManagerSelect.value = userData.managerid;
         } else {
             editManagerSelect.value = '';
         }
 
-        editModal.style.display = 'flex';
+        editModal.style.display = 'flex'; // tampilkan modal
     }
 
+    // Tutup modal
     function closeEditModal() {
         editModal.style.display = 'none';
     }
 
+    // Event klik tombol "Edit"
     document.body.addEventListener('click', function(event) {
         if (event.target.classList.contains('edit-user-btn')) {
             const button = event.target;
@@ -111,16 +126,15 @@ if (editModal) {
         }
     });
 
+    // Tombol batal edit
     cancelEditBtn.addEventListener('click', closeEditModal);
 
-    // Tutup modal jika klik di luar area modal
+    // Klik di luar area modal → tutup modal
     editModal.addEventListener('click', function(event) {
-        if (event.target === editModal) {
-            closeEditModal();
-        }
+        if (event.target === editModal) closeEditModal();
     });
 
-    // Ini untuk show/hide manager dropdown DI DALAM MODAL EDIT
+    // Ubah tampilan dropdown manager saat role berubah
     editRoleSelect.addEventListener('change', function() {
         if (this.value === 'team_member') {
             editManagerDiv.style.display = 'block';
@@ -133,35 +147,33 @@ if (editModal) {
     });
 }
 
-
-// ============================ //
-// EDIT PROJECT MODAL LOGIC     //
-// ============================ //
+// ============================================================
+// LOGIKA MODAL EDIT PROJECT (Project Manager)
+// ============================================================
 
 const editProjectModal = document.getElementById('edit-project-modal');
 
-if (editProjectModal) { 
+if (editProjectModal) {
     const editProjectForm = document.getElementById('edit_project_form');
     const editProjectIdInput = document.getElementById('edit_project_id');
     const editProjectNameInput = document.getElementById('edit_project_name');
     const editDescriptionInput = document.getElementById('edit_description');
     const cancelEditProjectBtn = document.getElementById('cancel-edit-project-btn');
 
+    // Buka modal edit proyek
     function openEditProjectModal(projectData) {
-        if (!editProjectModal) return;
-
         editProjectIdInput.value = projectData.id;
         editProjectNameInput.value = projectData.name;
         editDescriptionInput.value = projectData.description;
-
         editProjectModal.style.display = 'flex';
     }
 
+    // Tutup modal
     function closeEditProjectModal() {
-        if (!editProjectModal) return;
         editProjectModal.style.display = 'none';
     }
 
+    // Klik tombol edit proyek
     document.body.addEventListener('click', function(event) {
         if (event.target.classList.contains('edit-project-btn')) {
             const button = event.target;
@@ -174,52 +186,46 @@ if (editProjectModal) {
         }
     });
 
+    // Tombol batal edit proyek
     if (cancelEditProjectBtn) {
         cancelEditProjectBtn.addEventListener('click', closeEditProjectModal);
     }
 
-    if (editProjectModal) {
-        editProjectModal.addEventListener('click', function(event) {
-            if (event.target === editProjectModal) {
-                closeEditProjectModal();
-            }
-        });
-    }
+    // Klik di luar area modal → tutup modal
+    editProjectModal.addEventListener('click', function(event) {
+        if (event.target === editProjectModal) closeEditProjectModal();
+    });
 }
 
-
-// ============================ //
-// EDIT TASK MODAL LOGIC        //
-// ============================ //
+// ============================================================
+// LOGIKA MODAL EDIT TASK (Project Manager)
+// ============================================================
 
 const editTaskModal = document.getElementById('edit-task-modal');
 const editTaskForm = document.getElementById('edit_task_form');
 const editTaskIdInput = document.getElementById('edit_task_id');
-const editTaskProjectIdInput = document.getElementById('edit_project_id_for_task'); 
-const editTaskProjectNameDisplay = document.getElementById('edit_task_project_name'); 
+const editTaskProjectIdInput = document.getElementById('edit_project_id_for_task');
+const editTaskProjectNameDisplay = document.getElementById('edit_task_project_name');
 const editTaskNameInput = document.getElementById('edit_task_name');
 const editAssignedToSelect = document.getElementById('edit_assigned_to');
 const cancelEditTaskBtn = document.getElementById('cancel-edit-task-btn');
 
-// Fungsi untuk membuka modal edit tugas dan mengisi data
+// Buka modal edit tugas dan isi data dari tombol
 function openEditTaskModal(taskData) {
-    if (!editTaskModal) return;
-
     editTaskIdInput.value = taskData.id;
-    editTaskProjectIdInput.value = taskData.projectId; 
+    editTaskProjectIdInput.value = taskData.projectId;
     editTaskProjectNameDisplay.textContent = taskData.projectName;
     editTaskNameInput.value = taskData.name;
-    editAssignedToSelect.value = taskData.assignedToId || ""; // Set ke ID member atau kosong jika null
+    editAssignedToSelect.value = taskData.assignedToId || "";
     editTaskModal.style.display = 'flex';
 }
 
-// Fungsi untuk menutup modal edit tugas
+// Tutup modal edit tugas
 function closeEditTaskModal() {
-    if (!editTaskModal) return;
     editTaskModal.style.display = 'none';
 }
 
-// Tambahkan event listener ke SEMUA tombol edit tugas
+// Event tombol "Edit Task"
 document.body.addEventListener('click', function(event) {
     if (event.target.classList.contains('edit-task-btn')) {
         const button = event.target;
@@ -234,15 +240,14 @@ document.body.addEventListener('click', function(event) {
     }
 });
 
+// Tombol batal edit task
 if (cancelEditTaskBtn) {
     cancelEditTaskBtn.addEventListener('click', closeEditTaskModal);
 }
 
-// Tutup modal jika klik di luar area modal edit tugas
+// Klik di luar area modal edit tugas → tutup
 if (editTaskModal) {
     editTaskModal.addEventListener('click', function(event) {
-        if (event.target === editTaskModal) {
-            closeEditTaskModal();
-        }
+        if (event.target === editTaskModal) closeEditTaskModal();
     });
 }

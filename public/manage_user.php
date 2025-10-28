@@ -113,36 +113,35 @@ if (isset($_SESSION['flash_message'])) {
                             u.id ASC
                     ";
                     $result_all_users = $conn->query($sql_all_users);
-                    // $counter = 1;
 
                     if ($result_all_users && $result_all_users->num_rows > 0):
                         while ($user_row = $result_all_users->fetch_assoc()):
                     ?>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 font-medium text-gray-900"><?php echo $user_row['id']; ?></td>
-                                <td class="px-6 py-4 text-gray-700"><?php echo htmlspecialchars(ucfirst($user_row['username'])); ?></td>
-                                <td class="px-6 py-4 text-gray-700">
-                                    <?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $user_row['role']))); ?>
-                                </td>
-                                <td class="px-6 py-4 text-gray-700">
-                                    <?php echo $user_row['manager_name'] ? htmlspecialchars(ucfirst($user_row['manager_name'])) : '-'; ?>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button type="button"
-                                        class="edit-user-btn inline-block bg-blue-100 text-blue-600 hover:bg-blue-200 px-3 py-1 rounded-md mr-2"
-                                        data-id="<?php echo $user_row['id']; ?>"
-                                        data-username="<?php echo htmlspecialchars($user_row['username']); ?>"
-                                        data-role="<?php echo $user_row['role']; ?>"
-                                        data-managerid="<?php echo $user_row['project_manager_id'] ?? ''; ?>">
-                                        Edit
-                                    </button>
-                                    <a href="../src/actions/user_actions.php?delete=<?php echo $user_row['id']; ?>"
-                                        class="inline-block bg-red-100 text-red-600 hover:bg-red-200 px-3 py-1 rounded-md"
-                                        onclick="return confirmDelete('pengguna <?php echo htmlspecialchars($user_row['username']); ?>');">
-                                        Hapus
-                                    </a>
-                                </td>
-                            </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900"><?php echo $user_row['id']; ?></td>
+                            <td class="px-6 py-4 text-gray-700"><?php echo htmlspecialchars(ucfirst($user_row['username'])); ?></td>
+                            <td class="px-6 py-4 text-gray-700">
+                                <?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $user_row['role']))); ?>
+                            </td>
+                            <td class="px-6 py-4 text-gray-700">
+                                <?php echo $user_row['manager_name'] ? htmlspecialchars(ucfirst($user_row['manager_name'])) : '-'; ?>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button type="button"
+                                    class="edit-user-btn inline-block bg-blue-100 text-blue-600 hover:bg-blue-200 px-3 py-1 rounded-md mr-2"
+                                    data-id="<?php echo $user_row['id']; ?>"
+                                    data-username="<?php echo htmlspecialchars($user_row['username']); ?>"
+                                    data-role="<?php echo $user_row['role']; ?>"
+                                    data-managerid="<?php echo $user_row['project_manager_id'] ?? ''; ?>">
+                                    Edit
+                                </button>
+                                <a href="../src/actions/user_actions.php?delete=<?php echo $user_row['id']; ?>"
+                                    class="inline-block bg-red-100 text-red-600 hover:bg-red-200 px-3 py-1 rounded-md"
+                                    onclick="return confirmDelete('pengguna <?php echo htmlspecialchars($user_row['username']); ?>');">
+                                    Hapus
+                                </a>
+                            </td>
+                        </tr>
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
@@ -154,6 +153,8 @@ if (isset($_SESSION['flash_message'])) {
         </div>
     </div>
 </div>
+
+<!-- Modal pop-up edit pengguna -->
 <div id="edit-user-modal" class="fixed inset-0 backdrop-blur-sm bg-black/30 overflow-y-auto h-full w-full flex items-center justify-center" style="display: none;">
     <div class="relative mx-auto p-8 border w-full max-w-md shadow-lg rounded-xl bg-white">
         <h3 class="text-xl font-bold mb-4">Edit Pengguna</h3>

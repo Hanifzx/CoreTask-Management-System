@@ -44,7 +44,6 @@ if (isset($_SESSION['flash_message'])) {
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     <?php
-                    // Query untuk mengambil SEMUA proyek, nama manajer, dan daftar member tim
                     $sql_all_projects = "
                         SELECT
                             p.id AS project_id,
